@@ -1,3 +1,3 @@
 # Tutorial
 
-Alguns exemplos de cógido em go
+Alguns exemplos de funcionalidades do Go
