@@ -1,8 +1,7 @@
 package message
 
-
 import (
-    "fmt"
+	"fmt"
 )
 
 

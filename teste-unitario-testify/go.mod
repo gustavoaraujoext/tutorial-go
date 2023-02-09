@@ -1,6 +1,6 @@
 module github.com/kustavo/tutorial-go/teste-unitario-testify
 
-go 1.19
+go 1.20
 
 require github.com/stretchr/testify v1.8.1
 

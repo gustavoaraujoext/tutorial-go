@@ -1,9 +1,9 @@
 package message
 
 import (
-    "testing"
+	"testing"
 
-    "github.com/stretchr/testify/mock"
+	"github.com/stretchr/testify/mock"
 )
 
 type messageServiceMock struct {
