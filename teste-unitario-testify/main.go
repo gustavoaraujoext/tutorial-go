@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/kustavo/tutorial-go/teste-unitario-testify/message"
+)
 
 func main() {
 	// A "Production" Example

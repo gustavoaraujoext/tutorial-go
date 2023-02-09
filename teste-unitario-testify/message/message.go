@@ -13,7 +13,7 @@ type MessageService interface {
 type MessageServiceImp struct {}
 
 type MyService struct {
-    messageService MessageService
+    MessageService MessageService
 }
 
 func (sms MessageServiceImp) SendChargeNotification(value int) bool {
@@ -22,7 +22,7 @@ func (sms MessageServiceImp) SendChargeNotification(value int) bool {
 }
 
 func (a MyService) ChargeCustomer(value int) error {
-    a.messageService.SendChargeNotification(value)
+    a.MessageService.SendChargeNotification(value)
     fmt.Printf("Charging Customer For the value of %d\n", value)
     return nil
 }
