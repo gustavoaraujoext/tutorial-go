@@ -28,7 +28,7 @@ O escopo de um pacote é o diretório no qual o arquivo se encontra. Arquivos de
 
 São os pacotes internos, contidos em um diretório chamado `internal`. Diretórios com este nome são reconhecidos pela ferramenta que impedirá que um pacote seja importado por outro, a menos que ambos compartilhem um ancestral comum.
 
-Somente os pacotes do diretório e subdiretórios do pai do diretório `internal` podem acessar os pacotes contidos em `internal`.
+Somente os pacotes do diretório e subdiretórios do pai (raiz) do diretório `internal` podem acessar os pacotes contidos em `internal`.
 
 No exemplo abaixo, somente os pacotes do diretórios `C`, `D` e `E` e os próprios pacotes internos, podem acessar os pacotes em `A` e `B`. Uma vez que `C` é a raiz de `internal`, todos pacotes em `C` e descendentes podem acessar os pacotes internos.
 
