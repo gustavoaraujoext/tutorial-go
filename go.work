@@ -3,5 +3,3 @@ go 1.20
 use ./teste-unitario-testify
 
 use ./teste-unitario
-
-use ./pacotes-internos

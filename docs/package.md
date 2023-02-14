@@ -26,7 +26,13 @@ O escopo de um pacote é o diretório no qual o arquivo se encontra. Arquivos de
 
 ## Internal packages
 
-São pacotes contidos em um diretório chamado `internal`. Diretórios com este nome são reconhecidos pela ferramenta que impedirá que um pacote seja importado por outro, a menos que ambos compartilhem um ancestral comum.
+São os pacotes internos, contidos em um diretório chamado `internal`. Diretórios com este nome são reconhecidos pela ferramenta que impedirá que um pacote seja importado por outro, a menos que ambos compartilhem um ancestral comum.
+
+Somente os pacotes do diretório e subdiretórios do pai do diretório `internal` podem acessar os pacotes contidos em `internal`.
+
+No exemplo abaixo, somente os pacotes do diretórios `C`, `D` e `E` e os próprios pacotes internos, podem acessar os pacotes em `A` e `B`. Uma vez que `C` é a raiz de `internal`, todos pacotes em `C` e descendentes podem acessar os pacotes internos.
+
+![Exemplo restrição acesso pasta internal](assets/package-internal.png)
 
 ## Referência
 
