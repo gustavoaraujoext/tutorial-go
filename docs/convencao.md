@@ -2,12 +2,12 @@
 
 ## Formatação
 
-Go adota uma abordagem incomum e deixa a máquina cuidar da maioria dos problemas de formatação. O programa `gofmt` lê um programa Go e emite o código fonte em um estilo padrão de recuo e alinhamento vertical, retendo e, se necessário, reformatando os comentários. Todo o código Go nos pacotes padrão foi formatado com gofmt.
+Go adota uma abordagem incomum e deixa a máquina cuidar da maioria dos problemas de formatação. O programa `gofmt` lê um programa Go e emite o código fonte em um estilo padrão de recuo e alinhamento vertical, retendo e, se necessário, reformatando os comentários. Todo o código Go nos pacotes `Standard library` foi formatado com `gofmt`.
 
 Alguns detalhes de formatação:
 
 - __Recuo__: Usamos tabs para recuo e `gofmt` as coloca por padrão.
-- __Comprimento da linha__: não impõe limite de comprimento.
+- __Comprimento da linha__: Não impõe limite de comprimento.
 - __Parênteses__: Estruturas de controle (`if`, `for`, `switch`) não possuem parênteses em sua sintaxe.
 
 ## Comentários
@@ -129,7 +129,7 @@ if owner != user {
 
 Por convenção, as interfaces de um método são nomeadas pelo nome do método mais um sufixo `-er` ou modificação semelhante para construir um substantivo de agente: _Reader_, _Writer_, _Formatter_, _CloseNotifier_ etc.
 
-> **Note**
+> __Note__
 > A regra geral é `NomeMetodo + er = NomeInterface`. A parte complicada aqui é quando você tem uma interface com mais de um método. Nomear seguindo a convenção nem sempre será óbvio. Devo dividir a interface em várias interfaces com um único método? Acho que é uma decisão subjetiva que depende do caso.
 
 ## Pacotes especiais
@@ -152,7 +152,7 @@ Como podemos compartilhar um código e garantir que todos tenham as dependência
 
 ## Organização de projeto
 
-[Veja aqui](https://github.com/golang-standards/project-layout) uma proposta de Oganização de projeto bem aceita pela comunidade Go.
+[Veja aqui](https://github.com/golang-standards/project-layout) uma proposta de Organização de projeto bem aceita pela comunidade Go.
 
 Outros exemplos de estruturas de projetos de código aberto:
 
