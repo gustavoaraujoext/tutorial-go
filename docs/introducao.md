@@ -191,3 +191,4 @@ Abrir no navegador: `http://localhost:6060/pkg/<nome-modulo>`
 - <https://pt.wikipedia.org/wiki/Go_(linguagem_de_programa%C3%A7%C3%A3o)>
 - <https://www.digitalocean.com/community/tutorials/understanding-package-visibility-in-go-pt>
 - <https://www.treinaweb.com.br/blog/o-que-e-e-como-comecar-com-golang>
+- <https://aprendagolang.com.br/2022/05/12/como-utilizar-go-workspaces/>
