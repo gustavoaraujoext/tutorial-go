@@ -2,7 +2,7 @@
 
 ## Formatação
 
-Go adota uma abordagem incomum e deixa a máquina cuidar da maioria dos problemas de formatação. O programa `gofmt` lê um programa Go e emite o código fonte em um estilo padrão de recuo e alinhamento vertical, retendo e, se necessário, reformatando os comentários. Todo o código Go nos pacotes `Standard library` foi formatado com `gofmt`.
+Go adota uma abordagem incomum e deixa a máquina cuidar da maioria dos problemas de formatação. O programa `gofmt` lê um programa Go e emite o código fonte em um estilo padrão de recuo e alinhamento vertical, retendo e, se necessário, reformatando os comentários. Todo o código Go nos pacotes `Standard library` foram formatados com `gofmt`.
 
 Alguns detalhes de formatação:
 
@@ -63,7 +63,7 @@ func Compile(str string) (*Regexp, error) {
 Se cada comentário doc começar com o nome do item que descreve, você pode usar o subcomando doc da ferramenta go e executar a saída por meio do `grep`. Imagine que você não conseguia se lembrar do nome "Compile", mas estava procurando a função de análise para expressões regulares, então você executou o comando,
 
 ```bash
-go doc -all regexp | grep -i parse
+go doc -all regexp | grep -i <palavra>
 ```
 
 Se todos os comentários doc no pacote começassem com "Esta função...", o `grep` não o ajudaria a lembrar o nome. Mas como o pacote inicia cada comentário de documento com o nome, você veria algo assim, que lembra a palavra que você está procurando.
@@ -71,9 +71,9 @@ Se todos os comentários doc no pacote começassem com "Esta função...", o `gr
 ```bash
 $ go doc -all regexp | grep -i parse
 
-$ Compile parses a regular expression and returns, if successful, a Regexp
-MustCompile is like Compile but panics if the expression cannot be parsed.
-parsed. It simplifies safe initialization of global variables holding
+$ Compile **parse**s a regular expression and returns, if successful, a Regexp
+MustCompile is like Compile but panics if the expression cannot be **parse**d.
+**parse**d. It simplifies safe initialization of global variables holding
 ```
 
 A sintaxe de declaração do Go permite o agrupamento de declarações. Um único comentário doc pode introduzir um grupo de constantes ou variáveis ​​relacionadas. Uma vez que toda a declaração é apresentada, tal comentário pode muitas vezes ser superficial.
@@ -104,9 +104,115 @@ var (
 - Um nome de função não pode começar com um número.
 - A visibilidade de um nome fora de um pacote é determinada pelo fato de seu primeiro caractere ser maiúsculo.
 - Um nome deve começar com uma letra e pode ter qualquer número de letras e números adicionais.
-- Se um nome consiste em várias palavras, cada palavra após a primeira deve ser maiúscula. Não use sublinhados (ex: empName, EmpAddress). 
+- Se um nome consiste em várias palavras, cada palavra após a primeira deve ser maiúscula. Não use sublinhados (ex: empName, EmpAddress).
 - Nomes são _case-sensitive_, ou seja, diferenciam maiúsculas de minúsculas (ex: carro, Carro e CARRO são três variáveis ​​diferentes).
-- Para acrônimos como API, HTTP, etc. ou nomes como ID e DB. Convencionalmente, mantemos essas palavras em sua forma original. (ex: userID, productAPI)
+- Para acrônimos como API, HTTP, etc ou nomes como ID e DB, convencionalmente, mantemos essas palavras em sua forma original. (ex: userID, productAPI)
+
+### Nomenclatura de arquivos
+
+Não há uma convenção documentada para nomes de arquivos Go (além de _\_test.go_, _\_goos_goarch_, etc.). Há preferência para nomes curtos e significativos, como _io.go_, _pipe.go_, ect. Não é comum ver nomes em _mixedCaps_. Para pacotes mais complicados com muitos arquivos, às vezes são usados sublinhados quando uma separação adicional é necessária. Veja exemplos:
+
+#### snake_case
+
+```md
+marshaling:
+- encoding/json/example_marshaling_test.go
+- encoding/json/example_text_marshaling_test.go
+- encoding/xml/example_marshaling_test.go
+- encoding/xml/example_text_marshaling_test.go
+mmap:
+- cmd/compile/internal/gc/mapfile_mmap.go
+- cmd/internal/bio/buf_mmap.go
+- cmd/link/internal/ld/outbuf_mmap.go
+- runtime/cgo_mmap.go
+- runtime/export_mmap_test.go
+- runtime/runtime_mmap_test.go
+string:
+- cmd/compile/internal/gc/class_string.go
+- cmd/compile/internal/gc/op_string.go
+- cmd/compile/internal/syntax/operator_string.go
+- cmd/compile/internal/syntax/token_string.go
+- cmd/compile/internal/types/etype_string.go
+- cmd/internal/obj/abi_string.go
+- cmd/internal/obj/addrtype_string.go
+- cmd/internal/objabi/reloctype_string.go
+- cmd/internal/objabi/symkind_string.go
+- cmd/link/internal/sym/symkind_string.go
+- debug/dwarf/attr_string.go
+- debug/dwarf/class_string.go
+- debug/dwarf/tag_string.go
+- debug/macho/reloctype_string.go
+- html/template/attr_string.go
+- html/template/delim_string.go
+- html/template/element_string.go
+- html/template/jsctx_string.go
+- html/template/state_string.go
+- html/template/urlpart_string.go
+- math/big/accuracy_string.go
+- math/big/roundingmode_string.go
+- regexp/syntax/op_string.go
+sysnum:
+- internal/syscall/unix/at_sysnum_darwin.go
+- internal/syscall/unix/at_sysnum_dragonfly.go
+- internal/syscall/unix/at_sysnum_fstatat64_linux.go
+- internal/syscall/unix/at_sysnum_fstatat_linux.go
+- internal/syscall/unix/at_sysnum_linux.go
+- internal/syscall/unix/at_sysnum_netbsd.go
+- internal/syscall/unix/at_sysnum_newfstatat_linux.go
+- internal/syscall/unix/at_sysnum_openbsd.go
+```
+
+#### lowercase
+
+```md
+gccgoinstallation:
+- go/internal/gccgoimporter/gccgoinstallation_test.go
+loopreschedchecks:
+- cmd/compile/internal/ssa/loopreschedchecks.go
+mkfastlog2table:
+- runtime/mkfastlog2table.go
+mksizeclasses:
+- runtime/mksizeclasses.go
+obscuretestdata:
+- internal/obscuretestdata/obscuretestdata.go
+reproduciblebuilds:
+- cmd/compile/internal/gc/reproduciblebuilds_test.go
+```
+
+#### CamelCase
+
+```md
+386Ops:
+- cmd/compile/internal/ssa/gen/386Ops.go
+"387":
+- cmd/compile/internal/x86/387.go
+AMD64Ops:
+- cmd/compile/internal/ssa/gen/AMD64Ops.go
+ARM64Ops:
+- cmd/compile/internal/ssa/gen/ARM64Ops.go
+ARMOps:
+- cmd/compile/internal/ssa/gen/ARMOps.go
+MIPS64Ops:
+- cmd/compile/internal/ssa/gen/MIPS64Ops.go
+MIPSOps:
+- cmd/compile/internal/ssa/gen/MIPSOps.go
+PPC64Ops:
+- cmd/compile/internal/ssa/gen/PPC64Ops.go
+S390XOps:
+- cmd/compile/internal/ssa/gen/S390XOps.go
+WasmOps:
+- cmd/compile/internal/ssa/gen/WasmOps.go
+arithBoundary:
+- cmd/compile/internal/gc/testdata/arithBoundary_test.go
+arithBoundaryGen:
+- cmd/compile/internal/gc/testdata/gen/arithBoundaryGen.go
+arithConst:
+- cmd/compile/internal/gc/testdata/arithConst_test.go
+arithConstGen:
+- cmd/compile/internal/gc/testdata/gen/arithConstGen.go
+deferNoReturn:
+- cmd/compile/internal/gc/testdata/deferNoReturn_test.go
+```
 
 ### Nomenclatura de pacotes
 
