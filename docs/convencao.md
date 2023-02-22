@@ -179,7 +179,7 @@ reproduciblebuilds:
 - cmd/compile/internal/gc/reproduciblebuilds_test.go
 ```
 
-#### CamelCase
+#### mixedCaps
 
 ```md
 386Ops:
@@ -216,11 +216,32 @@ deferNoReturn:
 
 ### Nomenclatura de pacotes
 
-Por convenção, os pacotes recebem nomes com letras minúsculas e uma única palavra; não deve haver necessidade de sublinhados ou mixedCaps. Erre no lado da brevidade, já que todos que usarem seu pacote estarão digitando esse nome. E não se preocupe com colisões a priori. O nome do pacote é apenas o nome padrão para importações; ele não precisa ser exclusivo em todo o código-fonte e, no caso raro de uma colisão, o pacote importador pode escolher um nome diferente para usar localmente.
+Por convenção, os pacotes recebem nomes com letras minúsculas e uma única palavra no singular; não deve haver necessidade de sublinhados ou _mixedCaps_. Exemplo:
 
-Outra convenção é que o nome do pacote é o nome base de seu diretório de origem; o pacote em `src/encoding/base64` é importado como `encoding/base64`, mas tem o nome `base64`.
+```txt
+time (provides functionality for measuring and displaying time)
+list (implements a doubly linked list)
+http (provides HTTP client and server implementations)
+```
 
-### Getters
+Erre no lado da brevidade, já que todos que usarem seu pacote estarão digitando esse nome. E não se preocupe com colisões a priori. O nome do pacote é apenas o nome padrão para importações; ele não precisa ser exclusivo em todo o código-fonte e, no caso raro de uma colisão, o pacote importador pode escolher um nome diferente para usar localmente.
+
+Outra convenção é que o nome do pacote é o nome base de seu diretório de origem; o pacote em `src/encoding/base64` é importado como `encoding/base64`, mas tem o nome `base64`. Exemplo:
+
+```txt
+time -> src/time/
+list -> src/container/list/
+http -> src/net/http/
+```
+
+### Nomenclatura de interface
+
+Por convenção, as interfaces de um método são nomeadas pelo nome do método mais um sufixo `-er` ou modificação semelhante para construir um substantivo de agente: _Reader_, _Writer_, _Formatter_, _CloseNotifier_ etc.
+
+> __Note__
+> A regra geral é `NomeMetodo + er = NomeInterface`. A parte complicada aqui é quando você tem uma interface com mais de um método. Nomear seguindo a convenção nem sempre será óbvio. Devo dividir a interface em várias interfaces com um único método? Acho que é uma decisão subjetiva que depende de cada caso.
+
+### Nomenclatura de Getters e Setters
 
 Go não oferece suporte automático para `getters` e `setters`. Não há nada de errado você mesmo fornecer `getters` e `setters`, e muitas vezes é apropriado fazê-lo, mas não é idiomático nem necessário colocar `Get` no nome do `getter`. Se você tem um campo chamado "owner" (minúsculas, não exportado), o método `getter` deve ser chamado "Owner" (maiúsculas, exportado), não "GetOwner". O uso de nomes em maiúsculas para exportação fornece o meio para discriminar o campo do método. Uma função `setter`, se necessário, provavelmente será chamada "SetOwner". Ambos os nomes são bem lidos na prática:
 
@@ -231,18 +252,14 @@ if owner != user {
 }
 ```
 
-### Nomenclatura de interface
-
-Por convenção, as interfaces de um método são nomeadas pelo nome do método mais um sufixo `-er` ou modificação semelhante para construir um substantivo de agente: _Reader_, _Writer_, _Formatter_, _CloseNotifier_ etc.
-
-> __Note__
-> A regra geral é `NomeMetodo + er = NomeInterface`. A parte complicada aqui é quando você tem uma interface com mais de um método. Nomear seguindo a convenção nem sempre será óbvio. Devo dividir a interface em várias interfaces com um único método? Acho que é uma decisão subjetiva que depende do caso.
-
 ## Pacotes especiais
 
 ### Pacote main
 
 Todo programa executável deve conter um pacote chamado `main` e uma função chamada `main`. Depois que seu programa for compilado e, quando você quiser executá-lo, a função `main` deste pacote será a primeira função a ser chamada.
+
+> __Note__
+> Se a função `init` estiver presente no mesmo arquivo, ela será executada antes de `main`. A função `init` pode conter todas as tarefas de inicialização necessárias para que o programa seja executado corretamente.
 
 ## Diretórios especiais
 
@@ -252,9 +269,13 @@ Colocar um pacote dentro de um diretório chamado `internal`, esconde ainda mais
 
 O diretório `internal` é usado para tornar pacotes específicos não importáveis.
 
+[Veja aqui mais informações](package#internal-packages)
+
 ### Diretório vendoring
 
 Como podemos compartilhar um código e garantir que todos tenham as dependências baixas e, o mais importante, a versão correta de cada dependência? Isso pode ser feito através de __vendoring__, que é basicamente á uma funcionalidade que permite aplicações Go utilizar dependências não só de `$GOPATH/src`, mas também de um diretório chamado `vendor` dentro de cada projeto. O compilador do Go primeiramente procurará pelos pacotes dentro do diretório `vendor`, antes de procurar em `$GOPATH`.
+
+[Veja aqui mais informações](package#vendoring-packages)
 
 ## Organização de projeto
 

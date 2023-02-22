@@ -20,24 +20,6 @@ func Hello(name string) string {
 
 Esse código declara que ele está no pacote `greet`. Depois, ele declara dois símbolos, uma variável chamada `Greeting` e uma função chamada `Hello`. Como ambas começam com uma letra maiúscula, as duas são _exported_ e disponibilizadas para qualquer programa exterior.
 
-## Convenção
-
-Os nomes de pacotes em Go devem ser curtos e claros e no singular. Eles devem ser em caixa baixa, sem _underscore_ ou _mixedCaps_ como no exemplo abaixo:
-
-```txt
-time (provides functionality for measuring and displaying time)
-list (implements a doubly linked list)
-http (provides HTTP client and server implementations)
-```
-
-O nome do pacote deve ser igual a sua pasta, exemplo:
-
-```txt
-time -> src/time/
-list -> src/container/list/
-http -> src/net/http/
-```
-
 ## Escopo
 
 O escopo de um pacote é o diretório no qual o arquivo se encontra. Arquivos de um mesmo diretório que declaram o mesmo pacote serão considerados arquivos desse pacote. Mesmo que um arquivo em um subdiretório declarar o mesmo nome de pacote, este será considerado outro pacote.
@@ -69,7 +51,7 @@ func main() {
 
 ## Internal packages
 
-São os pacotes internos, contidos em um diretório chamado `internal`. Diretórios com este nome são reconhecidos pela ferramenta que impedirá que um pacote seja importado por outro, a menos que ambos compartilhem um ancestral comum.
+São os pacotes internos, contidos em um diretório chamado `internal`. Diretórios com este nome são reconhecidos pela ferramenta que impedirá que um pacote seja importado por outro, a menos que ambos compartilhem um ancestral comum. O diretório `internal` é usado para tornar pacotes específicos não importáveis.
 
 Somente os pacotes do diretório e subdiretórios do pai (raiz) do diretório `internal` podem acessar os pacotes contidos em `internal`.
 
@@ -77,8 +59,83 @@ No exemplo abaixo, somente os pacotes do diretórios `C`, `D` e `E` e os própri
 
 ![Exemplo restrição acesso pasta internal](assets/package-internal.png)
 
+## Vendoring packages
+
+Como podemos compartilhar um código e garantir que todos tenham as dependências baixas e, o mais importante, a versão correta de cada dependência? Isso pode ser feito através de __vendoring__, que é basicamente á uma funcionalidade que permite aplicações Go utilizar dependências não só de `$GOPATH/src`, mas também de um diretório chamado `vendor` dentro de cada projeto. O compilador do Go primeiramente procurará pelos pacotes dentro do diretório `vendor`, antes de procurar em `$GOPATH`.
+
+Abaixo um exemplo de como seria a árvore de diretórios em `vendor`:
+
+```go
+package main
+
+import (
+    "net/http"
+    "os"
+    "path"
+    "time"
+
+    "github.com/andybalholm/cascadia"
+    "github.com/tdewolff/parse/css"
+    "golang.org/x/net/html"
+)
+...
+```
+
+```txt
+.
+├── css_test.go
+├── main.go
+└── vendor
+    ├── github.com
+    │   ├── andybalholm
+    │   │   └── cascadia
+    │   │       ├── LICENSE
+    │   │       ├── parser.go
+    │   │       ├── README.md
+    │   │       └── selector.go
+    │   └── tdewolff
+    │       ├── buffer
+    │       │   ├── buffer.go
+    │       │   ├── lexer.go
+    │       │   ├── LICENSE.md
+    │       │   ├── reader.go
+    │       │   ├── README.md
+    │       │   ├── shifter.go
+    │       │   └── writer.go
+    │       └── parse
+    │           ├── common.go
+    │           ├── css
+    │           │   ├── hash.go
+    │           │   ├── lex.go
+    │           │   ├── parse.go
+    │           │   ├── README.md
+    │           │   └── util.go
+    │           ├── LICENSE.md
+    │           ├── README.md
+    │           └── util.go
+    ├── golang.org
+    │   └── x
+    │       └── net
+    │           └── html
+    │               ├── atom
+    │               │   ├── atom.go
+    │               │   ├── gen.go
+    │               │   └── table.go
+    │               ├── const.go
+    │               ├── doc.go
+    │               ├── doctype.go
+    │               ├── entity.go
+    │               ├── escape.go
+    │               ├── foreign.go
+    │               ├── node.go
+    │               ├── parse.go
+    │               ├── render.go
+    │               └── token.go
+    └── vendor.json
+```
+
 ## Referência
 
 - <https://www.digitalocean.com/community/tutorials/understanding-package-visibility-in-go-pt>
 - <https://www.practical-go-lessons.com/chap-11-packages-and-imports#the-internal-directory>
-
+- <https://blog.gopheracademy.com/advent-2015/vendor-folder>
