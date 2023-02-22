@@ -114,7 +114,7 @@ Não há uma convenção documentada para nomes de arquivos Go (além de _\_test
 
 #### snake_case
 
-```md
+```yaml
 marshaling:
 - encoding/json/example_marshaling_test.go
 - encoding/json/example_text_marshaling_test.go
@@ -164,7 +164,7 @@ sysnum:
 
 #### lowercase
 
-```md
+```yaml
 gccgoinstallation:
 - go/internal/gccgoimporter/gccgoinstallation_test.go
 loopreschedchecks:
@@ -181,7 +181,7 @@ reproduciblebuilds:
 
 #### CamelCase
 
-```md
+```yaml
 386Ops:
 - cmd/compile/internal/ssa/gen/386Ops.go
 "387":
