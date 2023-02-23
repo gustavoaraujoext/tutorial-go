@@ -357,7 +357,7 @@ Coloque suas configurações e scripts de CI (travis, circle, drone) no diretór
 
 Este diretório contém arquivos de IaaS, PaaS, configurações e modelos de implantação de orquestração de sistema e contêiner (_docker-compose_, _kubernetes_ / _helm_, _mesos_, _terraform_, _bosh_).
 
-> __NOTE__
+> __Note__
 > Observe que em alguns repositórios (especialmente em aplicativos implantados com kubernetes), esse diretório é denominado `/deploy`.
 
 #### /test

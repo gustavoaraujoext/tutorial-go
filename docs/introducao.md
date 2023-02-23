@@ -53,6 +53,16 @@ replace github.com/example/logging => ../logging
 
 A primeira linha desse arquivo diz ao compilador que o nosso pacote chama `cmd` e tem o caminho de arquivo `$GOPATH/src/` + `github.com/example/cmd`. A segunda linha diz a versão Go utilizada. A terceira linha diz ao compilador que o pacote `gorm` está localizado em `gorm.io/gorm`. E a quarta linha diz ao compilador que o pacote `github.com/example/logging` pode ser encontrado localmente em disco, no diretório `../logging`.
 
+> __Note__
+> Quando o pacote a ser usado é privado, devemos explicitar através do comando:
+>
+>```bash
+> go env -w GOPRIVATE=<ulr-dominio>
+> # Exemplos: 
+> # go env -w GOPRIVATE=github.com/kustavo
+> # go env -w GOPRIVATE=github.com/kustavo/*
+>```
+
 ### Comando "go mod init"
 
 Um arquivo `.mod` pode ser criado usando o comando abaixo:
