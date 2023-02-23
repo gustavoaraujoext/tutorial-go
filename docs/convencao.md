@@ -279,14 +279,133 @@ Como podemos compartilhar um código e garantir que todos tenham as dependência
 
 ## Organização de projeto
 
-[Veja aqui](https://github.com/golang-standards/project-layout) uma proposta de Organização de projeto bem aceita pela comunidade Go.
+Uma proposta de Organização de projeto bem aceita pela comunidade Go contém os seguintes diretórios:
 
-Outros exemplos de estruturas de projetos de código aberto:
+### Diretórios Go
 
-- <https://github.com/kubernetes/kubernetes>
-- <https://github.com/tsuru/tsuru>
+#### /cmd
+
+Este diretório contém os principais arquivos de ponto de entrada do aplicativo para o projeto. O nome do diretório para cada aplicação deve corresponder ao nome do executável (binário) que você deseja ter (ex. `/cmd/myapp/`). Arquivos deste diretório definem um pacote `main`, portanto o método `main` também estará num desses arquivos.
+
+É comum ter uma pequena função `main` que importa e invoca o código dos diretórios `/internal` e `/pkg` e nada mais.
+
+[Veja aqui alguns exemplos](https://github.com/golang-standards/project-layout/blob/master/cmd/README.md)
+
+#### /internal
+
+Este diretório contém aplicação privada e código de bibliotecas. Este é o código que você não quer que outras pessoas importem em suas aplicações ou bibliotecas.
+
+[Veja aqui mais informações](package#internal-packages)
+
+#### /vendor
+
+Este diretório contém as dependências de aplicativos (gerenciadas manualmente). O comando `go mod vendor` criará o diretório `/vendor` para você.
+
+[Veja aqui mais informações](package#vendoring-packages)
+
+#### /pkg
+
+Este diretório contém código de bibliotecas que podem ser usados por aplicativos externos (ex. `/pkg/mypubliclib`). Outros projetos irão importar essas bibliotecas esperando que funcionem, então pense duas vezes antes de colocar algo aqui.
+
+É também uma forma de agrupar o código Go em um só lugar quando o diretório raiz contém muitos componentes e diretórios não Go, tornando mais fácil executar várias ferramentas Go.
+
+Este é um padrão de layout comum, mas __não é universalmente aceito__ e alguns na comunidade Go não o recomendam.
+
+Não há problema em não usá-lo se o projeto do seu aplicativo for muito pequeno e onde um nível extra de aninhamento não agrega muito valor. Pense nisso quando estiver ficando grande o suficiente e seu diretório raiz ficar muito ocupado (especialmente se você tiver muitos componentes de aplicativos não Go).
+
+[Veja aqui alguns exemplos](https://github.com/golang-standards/project-layout/blob/master/pkg/README.md)
+
+### Diretórios de aplicativos de serviço
+
+#### /api
+
+Este diretório contém especificações _OpenAPI/Swagger_, arquivos de esquema JSON, arquivos de definição de protocolo.
+
+[Veja aqui alguns exemplos](https://github.com/golang-standards/project-layout/blob/master/api/README.md)
+
+### Diretórios de aplicativos da web
+
+#### /web
+
+Este diretório contém componentes específicos de aplicativos da Web: ativos estáticos da Web, modelos do lado do servidor e SPAs.
+
+### Diretórios de aplicativos comuns
+
+#### /configs
+
+Este diretório contém modelos de arquivo de configuração ou configurações padrão. Coloque seus arquivos de modelo _confd_ ou _consul-template_ aqui.
+
+#### /init
+
+Este diretório contém configurações de inicialização do sistema (_systemd_, _upstart_, _sysv_) e gerenciador/supervisor de processos (_runit_, _supervisord_).
+
+#### /scripts
+
+Este diretório contém scripts para executar várias operações de construção, instalação, análise, etc.
+
+[Veja aqui alguns exemplos](https://github.com/golang-standards/project-layout/blob/master/scripts/README.md)
+
+#### /build
+
+Este diretório contém arquivos de empacotamento e integração contínua.
+
+Coloque suas configurações de pacote e scripts em nuvem (_AMI_), contêiner (_Docker_), sistema operacional (_deb_, _rpm_, _pkg_) no diretório `/build/package`.
+
+Coloque suas configurações e scripts de CI (travis, circle, drone) no diretório `/build/ci`. Observe que algumas das ferramentas de CI (por exemplo, Travis CI) são muito exigentes quanto à localização de seus arquivos de configuração. Tente colocar os arquivos de configuração no diretório `/build/ci` vinculando-os ao local onde as ferramentas de CI os esperam (quando possível).
+
+#### /deployments
+
+Este diretório contém arquivos de IaaS, PaaS, configurações e modelos de implantação de orquestração de sistema e contêiner (_docker-compose_, _kubernetes_ / _helm_, _mesos_, _terraform_, _bosh_).
+
+> __NOTE__
+> Observe que em alguns repositórios (especialmente em aplicativos implantados com kubernetes), esse diretório é denominado `/deploy`.
+
+#### /test
+
+Este diretório contém aplicações de testes externos adicionais e dados de teste. Sinta-se à vontade para estruturar o diretório `/test` da maneira que quiser. Para projetos maiores, faz sentido ter um subdiretório de dados. Por exemplo, você pode ter `/test/data` ou `/test/testdata` se precisar que o Go ignore o que está naquele diretório. Observe que o Go também irá ignorar diretórios ou arquivos que começam com `.` ou `_`, para que você tenha mais flexibilidade em termos de como nomear seu diretório de dados de teste.
+
+[Veja aqui alguns exemplos](https://github.com/golang-standards/project-layout/blob/master/test/README.md)
+
+### Outros diretórios
+
+#### /docs
+
+Este diretório contém documentos do projeto e do usuário (além da documentação gerada pelo godoc).
+
+[Veja aqui alguns exemplos](https://github.com/golang-standards/project-layout/blob/master/docs/README.md)
+
+#### /tools
+
+Este diretório contém ferramentas de suporte para este projeto. Observe que essas ferramentas podem importar código dos diretórios `/pkg` e `/internal`.
+
+[Veja aqui alguns exemplos](https://github.com/golang-standards/project-layout/blob/master/tools/README.md)
+
+#### /examples
+
+Este diretório contém exemplos para seus aplicativos e/ou bibliotecas públicas.
+
+[Veja aqui alguns exemplos](https://github.com/golang-standards/project-layout/blob/master/examples/README.md)
+
+#### /third_party
+
+Este diretório contém ferramentas auxiliares externas, código bifurcado e outros utilitários de terceiros (por exemplo, Swagger UI).
+
+#### /githooks
+
+Este diretório contém Git hooks.
+
+#### /assets
+
+Este diretório contém outros recursos para acompanhar seu repositório (imagens, logotipos etc).
+
+#### /website
+
+Este diretório contém os dados do site do seu projeto se você não estiver usando as páginas do GitHub.
+
+[Veja aqui alguns exemplos](https://github.com/golang-standards/project-layout/blob/master/website/README.md)
 
 ## Referências
 
 - <https://go.dev/doc/effective_go>
 - <https://www.golangprograms.com/naming-conventions-for-golang-functions.html>
+- <https://github.com/golang-standards/project-layout/blob/master/README_ptBR.md>
