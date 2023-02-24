@@ -1,5 +1,14 @@
 # Convenções
 
+Para escrever Go bem, é importante entender suas propriedades e expressões idiomáticas além de conhecer as convenções estabelecidas para programação no Go, como nomenclatura, formatação, programa construção, e assim por diante, para que os programas que você escreve ser fácil para outros programadores de Go entenderem.
+
+Abaixo as principais referências oficiais para escrever um bom código em Go:
+
+- <https://go.dev/doc/effective_go>
+- <https://github.com/golang/go/wiki/CodeReviewComments>
+- <https://google.github.io/styleguide/go/decisions>
+- <https://go.dev/ref/spec>
+
 ## Formatação
 
 Go adota uma abordagem incomum e deixa a máquina cuidar da maioria dos problemas de formatação. O programa `gofmt` lê um programa Go e emite o código fonte em um estilo padrão de recuo e alinhamento vertical, retendo e, se necessário, reformatando os comentários. Todo o código Go nos pacotes `Standard library` foram formatados com `gofmt`.

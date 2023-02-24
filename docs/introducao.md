@@ -119,6 +119,55 @@ Para atualizar o `go.mod`, ou seja, adicionar as dependências e remover depend�
 go mod tidy
 ```
 
+### Comando "go vet"
+
+Examina o código-fonte do Go e relata construções suspeitas. Ele usa heurística que não garantem que todos os relatórios são problemas genuínos, mas pode encontrar erros não capturado pelos compiladores.
+
+```bash
+# Examina o pacote no diretório informado
+go vet <path-pacote>
+```
+
+Para listar as verificações disponíveis, execute `go tool vet help`:
+
+```txt
+asmdecl      report mismatches between assembly files and Go declarations
+assign       check for useless assignments
+atomic       check for common mistakes using the sync/atomic package
+bools        check for common mistakes involving boolean operators
+buildtag     check that +build tags are well-formed and correctly located
+cgocall      detect some violations of the cgo pointer passing rules
+composites   check for unkeyed composite literals
+copylocks    check for locks erroneously passed by value
+httpresponse check for mistakes using HTTP responses
+loopclosure  check references to loop variables from within nested functions
+lostcancel   check cancel func returned by context.WithCancel is called
+nilfunc      check for useless comparisons between functions and nil
+printf       check consistency of Printf format strings and arguments
+shift        check for shifts that equal or exceed the width of the integer
+stdmethods   check signature of methods of well-known interfaces
+structtag    check that struct field tags conform to reflect.StructTag.Get
+tests        check for common mistaken usages of tests and examples
+unmarshal    report passing non-pointer or non-interface values to unmarshal
+unreachable  check for unreachable code
+unsafeptr    check for invalid conversions of uintptr to unsafe.Pointer
+unusedresult check for unused results of calls to some functions
+```
+
+### Comando "go fmt"
+
+Aplica padrões de formatação de código ao seu código. Essas alterações de formatação não afetam a execução do código, em vez disso, melhoram a legibilidade da base de código, garantindo que o código seja visualmente consistente. concentra-se em coisas como recuo, espaço em branco, comentários e sucintidade geral do código.
+
+```bash
+go fmt <path-arquivo>
+```
+
+### Comando "golint"
+
+É um linter mantido pelos desenvolvedores do Go. Destina-se a impor as convenções de codificação descritas em _Effective Go_ e _CodeReviewComments_. Essas mesmas convenções são usadas no projeto Go de código aberto e no Google. Para instalá-lo execute o comando `go get -u golang.org/x/lint/golint`.
+
+[Veja aqui outros Linters muito úteis](https://github.com/golangci/awesome-go-linters)
+
 ### Checksum
 
 O arquivo `go.sum` é responsável por manter todas as informações para checksum das dependências utilizadas no projeto.
