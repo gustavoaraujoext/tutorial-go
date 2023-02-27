@@ -4,7 +4,7 @@ Uma função é um grupo de instruções que existem dentro de um programa com a
 
 Funções são geralmente o bloco de códigos ou instruções em um programa que dá ao usuário a capacidade de reutilizar o mesmo código que, em última análise, economiza o uso excessivo de memória, atua como uma economia de tempo e, mais importante, fornece melhor legibilidade do código. Então, basicamente, uma função é uma coleção de instruções que executam alguma tarefa específica e retornam o resultado para o chamador. Uma função também pode executar alguma tarefa específica sem retornar nada.
 
-Abaixo o exemplo de uma função em Go:
+Abaixo o exemplo de sintaxe de função em Go:
 
 ```go
 func nome_funcao(lista_parametros)(tipo_retorno){
