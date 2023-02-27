@@ -151,13 +151,15 @@ function nome_funcao(param1, param2 ...tipo) tipo_retorno {
 }
 ```
 
-- O parâmetro de função variádica deve ser sempre o __último__ e pode haver somente __um__ parâmetro de função variádica.
-- `...tipo` se comporta como um _slice_. Por exemplo, suponha que temos uma assinatura de função, ou seja, `add(b... int) int`, agora o parâmetro é do tipo `[]int`.
-- Você pode passar um _slice_ existente em uma função variádica.
-- Quando você não passa nenhum argumento na função variádica, então o _slice_ dentro da função será vazio.
-- As funções variádicas são geralmente usadas para funções que executam a formatação de cadeia de caracteres.
-- Você pode passar várias slice na função variádica.
-- Você __não__ pode usar parâmetro variádico como um valor de retorno, mas você pode retorná-lo como um _slice_.
+> __Note__
+>
+> - O parâmetro de função variádica deve ser sempre o __último__ e pode haver somente __um__ parâmetro de função variádica.
+> - `...tipo` se comporta como um _slice_. Por exemplo, suponha que temos uma assinatura de função, ou seja, `add(b... int) int`, agora o parâmetro é do tipo `[]int`.
+> - Você pode passar um _slice_ existente em uma função variádica.
+> - Quando você não passa nenhum argumento na função variádica, então o _slice_ dentro da função será vazio.
+> - As funções variádicas são geralmente usadas para funções que executam a formatação de cadeia de caracteres.
+> - Você pode passar várias slice na função variádica.
+> - Você __não__ pode usar parâmetro variádico como um valor de retorno, mas você pode retorná-lo como um _slice_.
 
 __Exemplo com somente parâmetros de função variádica__:
 
@@ -373,8 +375,99 @@ func main() {
     fmt.Println(squareSum(5)(6)(7))
 }
 
-// saída: 110
+// Saída: 110
 ```
+
+## Identificador em Branco
+
+O `_` (sublinhado) em Golang é conhecido como o Identificador em Branco. Identificadores são o nome definido pelo usuário dos componentes do programa usados para a finalidade de identificação. O Golang tem um recurso especial para definir e usar a variável não utilizada usando o Identificador em Branco. Variáveis não utilizadas são aquelas variáveis que são definidas pelo usuário ao longo do programa mas que nunca são usadas.
+
+O uso real do Identificador em Branco vem quando uma função retorna vários valores, mas precisamos apenas de alguns valores e queremos descartar alguns valores. Basicamente, ele diz ao compilador que essa variável não é necessária e pode ignorá-la sem qualquer erro. Veja o exemplo abaixo:
+
+```go
+package main
+ 
+import "fmt"
+ 
+func main() {
+    mul, _ := mul_div(105, 7) // obtendo valor da multiplicação e ignorando o da divisão
+    fmt.Println("105 x 7 = ", mul)
+}
+
+func mul_div(n1 int, n2 int) (int, int) {
+     return n1 * n2, n1 / n2
+}
+```
+
+## Chamas de funções diferidas
+
+Go tem uma instrução especial chamada `defer` que programa uma chamada de função para ser executada após a conclusão da função. Considere o seguinte exemplo:
+
+```go
+package main
+
+import "fmt"
+
+func first() {
+    fmt.Println("First")
+}
+func second() {
+    fmt.Println("Second")
+}
+func main() {
+    defer second()
+    first()
+}
+
+// Saída:
+// First
+// Second
+```
+
+Uma instrução de diferimento (adiamento) é frequentemente usada com operações emparelhadas, como abrir e fechar, conectar e desconectar ou bloquear e desbloquear para garantir que os recursos sejam liberados em todos os casos, não importa o quão complexo seja o fluxo de controle. O lugar certo para uma instrução de adiamento que libera um recurso é __imediatamente após o recurso ter sido adquirido com êxito__.
+
+Abaixo está o exemplo para abrir um arquivo e executar a ação de leitura/gravação sem usar o `defer`:
+
+```go
+func ReadWrite() bool {
+    file.Open("file")
+
+    if failureX {
+        file.Close()
+        return false
+    }
+    if failureY {
+        file.Close()
+        return false
+    }
+    file.Close()
+    return true
+}
+```
+
+Mesmo exemplo mas agora usando `defer`:
+
+```go
+func ReadWrite() bool {
+    file.Open("file")
+    defer file.Close()
+
+    if failureX {
+        return false
+    }
+    if failureY {
+        return false
+    }
+    return true
+}
+```
+
+> __Note__
+>
+> - Pode haver mais de uma função diferida no mesmo escopo.
+> - As funções diferidas são executadas em ordem LIFO(Last-In, First-Out), ou seja, em forma de pilha.
+> - Nas instruções `defer`, os argumentos são avaliados quando a instrução `defer` é executada, não quando é chamada.
+> - As Funções diferidas são executadas mesmo se ocorrer um __pânico__ (em inglês, _panic_) de tempo de execução.
 
 ## Referências
 
@@ -382,3 +475,5 @@ func main() {
 - <https://www.geeksforgeeks.org/variadic-functions-in-go>
 - <https://www.golangprograms.com/go-language/variadic-functions.html>
 - <https://www.golangprograms.com/go-language/functions.html>
+- <https://www.golangprograms.com/go-language/deferred-functions-calls.html>
+- <https://www.geeksforgeeks.org/defer-keyword-in-golang>
