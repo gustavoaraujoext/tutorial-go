@@ -6,7 +6,7 @@ O pacote `fmt` implementa E/S formatada com funções análogas para C como `pri
 
 __Geral__:
 
-```txt
+```md
 %v  - o valor em um formato padrão*, ao imprimir _structs_, o sinalizador "+" (%+v) adiciona nomes de campo.
 %#v - uma representação da sintaxe Go do valor.
 %T  - uma representação da sintaxe Go do tipo do valor.
