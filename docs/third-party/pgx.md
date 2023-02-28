@@ -22,10 +22,10 @@ A maioria dos bancos de dados relacionais lida com uma consulta (query) em quatr
 As etapas acima são apenas um esboço, na realidade, há mais ciclos de solicitação-resposta envolvidos entre o cliente e o servidor de banco de dados. Apesar de haver mais requisições ao banco de dados ([leia mais](https://aloksinhanov.medium.com/query-vs-exec-vs-prepare-in-golang-e7c49212c36c)), há duas grandes vantagens em utilizar _prepared statements_:
 
 - `Performance`:
-    - Um _Statement_ irá sempre passar pelos quatro passos acima para cada consulta SQL enviada para o banco. Já um _Prepared Statement_ pré-executa os passos 1, 2 e 3. Então, ao criar um _Prepared Statement_ você pode executar a mesma consulta repetidas vezes mudando apenas os parâmetros de cada uma, a execução usando _Prepared Statements_ será mais rápida e com menos carga sobre o banco. Isso ocorre porque a consulta é "parseada" apenas uma vez, nas próximas vezes o PostgreSQL não precisa fazer checagem de sintaxe da query. Muito útil, como por exemplo, fazer vários INSERTs.
+  - Um _Statement_ irá sempre passar pelos quatro passos acima para cada consulta SQL enviada para o banco. Já um _Prepared Statement_ pré-executa os passos 1, 2 e 3. Então, ao criar um _Prepared Statement_ você pode executar a mesma consulta repetidas vezes mudando apenas os parâmetros de cada uma, a execução usando _Prepared Statements_ será mais rápida e com menos carga sobre o banco. Isso ocorre porque a consulta é "parseada" apenas uma vez, nas próximas vezes o PostgreSQL não precisa fazer checagem de sintaxe da query. Muito útil, como por exemplo, fazer vários INSERTs.
     - _Prepared statments_ podem utilizar um protocolo binário, ao invés de enviar strings como o protocolo tradicional.
 - `Evitar injeções de SQL`:
-    - _Prepared Statement_ realiza o escape de caracteres que poderiam formar um comando SQL, evitando ataques de Injeção de SQL.
+  - _Prepared Statement_ realiza o escape de caracteres que poderiam formar um comando SQL, evitando ataques de Injeção de SQL.
 
 Portanto para uma consulta que vai ser executada poucas vezes e não requer nenhum parâmetro, _Statement_ basta. Para os demais casos, prefira _Prepared Statement_.
 

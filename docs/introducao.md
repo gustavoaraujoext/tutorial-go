@@ -13,7 +13,7 @@ Go tem como suas principais características:
 - É simples de compilar e empacotar, gerando binários que podem ser executados diretamente pelo sistema operacional sem a necessidade de instalar nenhum interpretador previamente;
 - Extensa biblioteca padrão com ferramentas para comunicação HTTP, serialização e desserialização de dados, expressões regulares e muito mais.
 
-Algumas funcionalidades ausentes em Go são tratamento de exceção, herança, assert e sobrecarga de métodos. Os autores argumentam abertamente contra asserções e defendem a omissão de herança de tipos em favor da eficiência. Ao contrário de Java, vetores associativos são parte intrínseca da linguagem, assim como strings.
+Algumas funcionalidades ausentes em Go são tratamento de exceção, herança, asserção e sobrecarga de métodos. Os autores argumentam abertamente contra asserções e defendem a omissão de herança de tipos em favor da eficiência. Ao contrário de Java, vetores associativos são parte intrínseca da linguagem, assim como strings.
 
 ## Instalação (Linux)
 
@@ -36,6 +36,25 @@ Algumas funcionalidades ausentes em Go são tratamento de exceção, herança, a
     ```bash
     go version
     ```
+
+## Palavras-chave
+
+Palavras-chave ou palavras reservadas são as palavras em um idioma que são usadas para algum processo interno ou representam algumas ações predefinidas. Essas palavras não são, portanto, autorizadas a serem usadas como um identificador. Isso resultará em um erro de tempo de compilação.
+
+Há um total de 25 palavras-chave presentes na linguagem Go até o momento (Go 1.20):
+
+```txt
+break     default      func    interface  select
+case      defer        go      map        struct
+chan      else         goto    package    switch
+const     fallthrough  if      range      type
+continue  for          import  return     var
+```
+
+- `const`, `func`, `import`, `package`, `type` e `var` são usados para declarar todos os tipos de elementos de código em programas Go.
+- `chan`, `interface`, `map` e `struct` são usados como partes em algumas denotações de tipo composto.
+- `break`, `case`, `continue`, `default`, `else`, `fallthrough`, `for`, `goto`, `if`, `range`, `return`, `select` e `switch` são usados para controlar o fluxo de código.
+- `defer` e `go` também são palavras-chave de fluxo de controle, mas de outras maneiras específicas. Eles modificam as chamadas de função.
 
 ## Gerenciador de dependências
 
@@ -251,3 +270,4 @@ Abrir no navegador: `http://localhost:6060/pkg/<nome-modulo>`
 - <https://www.digitalocean.com/community/tutorials/understanding-package-visibility-in-go-pt>
 - <https://www.treinaweb.com.br/blog/o-que-e-e-como-comecar-com-golang>
 - <https://aprendagolang.com.br/2022/05/12/como-utilizar-go-workspaces/>
+- <https://go101.org/article/keywords-and-identifiers.html>
